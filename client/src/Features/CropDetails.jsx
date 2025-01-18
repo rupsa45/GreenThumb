@@ -8,23 +8,23 @@ const CropDetails = () => {
   const [cropDetails, setCropDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
- 
+  function capitalizeFirstLetter(val) {
+    return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+  }
   useEffect(() => {
     const fetchCropDetails = async () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await getCropDetails(state,crop)
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch crop details");
-        }
-
-        const data = await response.json();
-        setCropDetails(data);
+        const res= await getCropDetails(state, crop);
+      
+        setCropDetails(res);
+        console.log("Crop Details:", res);
+        
       } catch (err) {
+        console.error("Error fetching crop details:", err);
         setError(err.message);
-      } finally {
+      }finally {
         setLoading(false);
       }
     };
@@ -44,7 +44,7 @@ const CropDetails = () => {
           {/* Left Section */}
           <div>
             <h1 className="text-3xl font-bold mb-4 text-green-800">
-              {cropDetails.crop} in {cropDetails.state}
+              {capitalizeFirstLetter(cropDetails.crop_details.crop)} in {capitalizeFirstLetter(cropDetails.crop_details.state)}
             </h1>
 
             {/* Crop Image Card */}
@@ -56,7 +56,7 @@ const CropDetails = () => {
                 <div className="aspect-video relative overflow-hidden rounded-lg">
                   <img
                     src="/placeholder.svg?height=400&width=600"
-                    alt={`${cropDetails.crop} field`}
+                    alt={`${cropDetails.crop_details.crop} field`}
                     layout="fill"
                     objectFit="cover"
                   />
@@ -73,21 +73,21 @@ const CropDetails = () => {
                 <div className="grid grid-cols-3 gap-4">
                   <div>
                     <p className="font-semibold text-green-700">Nitrogen (N)</p>
-                    <p className="text-green-600">{cropDetails.N_mean} kg/ha</p>
+                    <p className="text-green-600">{cropDetails.crop_details.N_mean} kg/ha</p>
                   </div>
                   <div>
                     <p className="font-semibold text-green-700">Phosphorus (P)</p>
-                    <p className="text-green-600">{cropDetails.P_mean} kg/ha</p>
+                    <p className="text-green-600">{cropDetails.crop_details.P_mean} kg/ha</p>
                   </div>
                   <div>
                     <p className="font-semibold text-green-700">Potassium (K)</p>
-                    <p className="text-green-600">{cropDetails.K_mean} kg/ha</p>
+                    <p className="text-green-600">{cropDetails.crop_details.K_mean} kg/ha</p>
                   </div>
                 </div>
                 <Separator className="my-4 bg-green-200" />
                 <div>
                   <p className="font-semibold text-green-700">Soil pH</p>
-                  <p className="text-green-600">{cropDetails.pH_mean.toFixed(2)}</p>
+                  <p className="text-green-600">{cropDetails.crop_details.pH_mean}</p>
                 </div>
               </CardContent>
             </Card>
@@ -105,13 +105,13 @@ const CropDetails = () => {
                   <div>
                     <p className="font-semibold text-yellow-700">Average Rainfall</p>
                     <p className="text-yellow-600">
-                      {cropDetails.Rainfall_mean.toFixed(2)} mm
+                      {cropDetails.crop_details.Rainfall_mean} mm
                     </p>
                   </div>
                   <div>
                     <p className="font-semibold text-yellow-700">Average Temperature</p>
                     <p className="text-yellow-600">
-                      {cropDetails.Temperature_mean.toFixed(2)}°C
+                      {cropDetails.crop_details.Temperature_mean}°C
                     </p>
                   </div>
                 </div>
@@ -128,21 +128,19 @@ const CropDetails = () => {
                   <div>
                     <p className="font-semibold text-yellow-700">Cultivated Area</p>
                     <p className="text-yellow-600">
-                      {cropDetails.Area_mean.toFixed(2)} hectares
+                      {cropDetails.crop_details.Area_mean} hectares
                     </p>
                   </div>
                   <div>
                     <p className="font-semibold text-yellow-700">Average Production</p>
                     <p className="text-yellow-600">
-                      {cropDetails.Production_mean.toFixed(2)} tonnes
+                      {cropDetails.crop_details.Production_mean} tonnes
                     </p>
                   </div>
                   <div>
                     <p className="font-semibold text-yellow-700">Yield</p>
                     <p className="text-yellow-600">
-                      {(cropDetails.Production_mean / cropDetails.Area_mean).toFixed(
-                        2
-                      )}{" "}
+                      {(cropDetails.crop_details.Production_mean / cropDetails.crop_details.Area_mean)}{" "}
                       tonnes/hectare
                     </p>
                   </div>

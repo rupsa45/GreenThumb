@@ -51,6 +51,7 @@ const Tab = () => {
       setLoading(false);
     }
   };
+  
   const state = weatherData?.location?.region || "";
 
   return (

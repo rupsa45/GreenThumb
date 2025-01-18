@@ -4,33 +4,53 @@ import { Sprout } from "lucide-react";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { fetchCrops } from "../apis/crop.api";
+import { fetchWeeklyAvg, predictCrop } from "../apis/crop.api";
 
 const CropRecommendation = ({ state }) => {
   const [topCrops, setTopCrops] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  function capitalizeFirstLetter(val) {
+  const [weeklyAvgData, setWeeklyAvgData] = useState(null);
+
+  const capitalizeFirstLetter = (val) => {
     return String(val).charAt(0).toUpperCase() + String(val).slice(1);
-  }
+  };
+
   useEffect(() => {
     if (!state) return;
 
-    const getCrops = async () => {
+    const fetchAndPredict = async () => {
       setLoading(true);
       setError(null);
-
       try {
-        const crops = await fetchCrops(state);
-        setTopCrops(crops);
+        // Fetch weekly average data
+        const res = await fetchWeeklyAvg(state);
+        setWeeklyAvgData(res);
+
+        // Predict crops based on fetched data
+        if (res) {
+          const cropPrediction = await predictCrop(
+            res.location,
+            res.avg_rainfall,
+            res.avg_temp
+          );
+
+          // Filter and sort crops by probability
+          const filteredCrops = cropPrediction
+            .filter((crop) => crop.probability > 0)
+            .sort((a, b) => b.probability - a.probability);
+
+          setTopCrops(filteredCrops);
+        }
       } catch (err) {
-        setError(err.message);
+        console.error("Error in fetching and predicting crops:", err);
+        setError("Failed to fetch crop recommendations. Please try again.");
       } finally {
         setLoading(false);
       }
     };
 
-    getCrops();
+    fetchAndPredict();
   }, [state]);
 
   return (
@@ -41,6 +61,7 @@ const CropRecommendation = ({ state }) => {
             <h2 className="text-2xl md:text-3xl font-bold text-green-900 mb-6 font-serif">
               Recommended Crops
             </h2>
+
             {loading && (
               <div className="flex justify-center items-center h-20">
                 <svg
@@ -65,14 +86,16 @@ const CropRecommendation = ({ state }) => {
                 </svg>
               </div>
             )}
+
             {error && (
               <p className="text-center text-red-600 bg-red-100 p-3 rounded-lg">
                 {error}
               </p>
             )}
+
             {!loading && !error && (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {topCrops.map((crop, index) => (
+                {topCrops.map(({ crop, probability }, index) => (
                   <div
                     key={index}
                     className="p-6 bg-white/30 rounded-lg shadow-md hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
@@ -80,9 +103,14 @@ const CropRecommendation = ({ state }) => {
                     <div className="flex items-center gap-3 mb-3">
                       <Sprout className="w-6 h-6 md:w-8 md:h-8 text-green-700" />
                       <h3 className="text-xl md:text-2xl font-medium text-green-800">
-                        <Link to={`/crop-detail/${state}/${crop}`}>{capitalizeFirstLetter(crop)}</Link>
+                        <Link to={`/crop-detail/${state}/${crop}`}>
+                          {capitalizeFirstLetter(crop)}
+                        </Link>
                       </h3>
                     </div>
+                    <p className="text-sm text-gray-600">
+                      Probability: {(probability * 100).toFixed(2)}%
+                    </p>
                   </div>
                 ))}
               </div>

@@ -1,9 +1,36 @@
 const FASTAPI_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
 import axios from "axios";
 
+// Function to fetch weekly average data
+export const fetchWeeklyAvg = async (location) => {
+  try {
+    const response = await axios.post(`${FASTAPI_URL}/weekly-avg`, {
+      location,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching weekly average data:", error);
+  }
+};
+
+export const predictCrop = async (state,rainfall,temp) => {
+
+  try {
+    const response = await axios.post(`${FASTAPI_URL}/predict-crop`, {
+      State: state,
+      Rainfall:rainfall,
+      Temperature:temp,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error predicting crop:", error);
+  }
+};
+
+
 export const fetchCrops = async (state) => {
   try {
-    const response = await fetch(`${FASTAPI_URL}/predict_crops`, {
+    const response = await fetch(`${FASTAPI_URL}/predict-crop`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

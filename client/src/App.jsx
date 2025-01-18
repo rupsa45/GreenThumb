@@ -7,7 +7,6 @@ import PublicRoute from "./Protected/PublicRoute";
 import ProtectedRoute from "./Protected/ProtectedRoute";
 import ProfilePage from "./pages/ProfilePage";
 import DetailPage from "./pages/DetailPage";
-import CropDetails from "./Features/CropDetails";
 
 const App = () => {
   return (
@@ -53,7 +52,7 @@ const App = () => {
           path="/crop-detail/:state/:crop"
           element={
             <ProtectedRoute>
-              <CropDetails/>
+              <DetailPage/>
             </ProtectedRoute>
           }
         />
