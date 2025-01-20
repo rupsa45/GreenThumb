@@ -22,8 +22,12 @@ const LoginForm = () => {
         e.preventDefault();
         try {
           const response= await login(formData.email,formData.password);
+            const city = response.user.city;
+            const state = response.user.state;
           if(response.success){
             localStorage.setItem("token", response.token);
+            localStorage.setItem("city", city);
+            localStorage.setItem("state", state);
             navigate("/weather");
             console.log("response:",response);     
           }else{

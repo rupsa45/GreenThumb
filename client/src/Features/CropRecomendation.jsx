@@ -100,17 +100,19 @@ const CropRecommendation = ({ state }) => {
                     key={index}
                     className="p-6 bg-white/30 rounded-lg shadow-md hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
                   >
+                    <Link to={`/crop-detail/${state}/${crop}`} target="blank">
                     <div className="flex items-center gap-3 mb-3">
                       <Sprout className="w-6 h-6 md:w-8 md:h-8 text-green-700" />
                       <h3 className="text-xl md:text-2xl font-medium text-green-800">
-                        <Link to={`/crop-detail/${state}/${crop}`}>
+                        
                           {capitalizeFirstLetter(crop)}
-                        </Link>
+                       
                       </h3>
                     </div>
-                    <p className="text-sm text-gray-600">
+                    </Link>
+                    {/* <p className="text-sm text-gray-600">
                       Probability: {(probability * 100).toFixed(2)}%
-                    </p>
+                    </p> */}
                   </div>
                 ))}
               </div>

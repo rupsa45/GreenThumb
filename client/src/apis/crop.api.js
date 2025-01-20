@@ -27,7 +27,6 @@ export const predictCrop = async (state,rainfall,temp) => {
   }
 };
 
-
 export const fetchCrops = async (state) => {
   try {
     const response = await fetch(`${FASTAPI_URL}/predict-crop`, {

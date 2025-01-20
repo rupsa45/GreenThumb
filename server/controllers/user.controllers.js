@@ -64,14 +64,20 @@ export const login = async (req, res) => {
       sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    res.json({
+    res.status(200).send({
       success: true,
-      message: "User logged in successfully",
-      token,
+      message: "Login successful!",
+      user: {
+        name: user.name,
+        email: user.email,
+        city: user.city,
+        state: user.state,
+      },
+      token
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    console.error("Error during login:", error);
+    res.status(500).send({ message: "Login failed." });
   }
 };
 

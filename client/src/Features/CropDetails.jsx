@@ -140,7 +140,7 @@ const CropDetails = () => {
                   <div>
                     <p className="font-semibold text-yellow-700">Yield</p>
                     <p className="text-yellow-600">
-                      {(cropDetails.crop_details.Production_mean / cropDetails.crop_details.Area_mean)}{" "}
+                      {(cropDetails.crop_details.Production_mean / cropDetails.crop_details.Area_mean).toFixed(2)}{" "}
                       tonnes/hectare
                     </p>
                   </div>

@@ -4,6 +4,7 @@ import CropRecomendation from "./CropRecomendation";
 import Guides from "./Guides";
 import WeatherTab from "./WeatherTab";
 import { useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const FASTAPI_BASE_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
 const WEATHER_API_KEY = import.meta.env.VITE_WEATHERAPI_KEY;
@@ -14,6 +15,7 @@ const Tab = () => {
   const [soilData, setSoilData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [recentSearches, setRecentSearches] = useState([]);
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -30,11 +32,25 @@ const Tab = () => {
       if (!response.ok) {
         throw new Error("Location not found. Please try again.");
       }
-
+      
       const weather = await response.json();
       setWeatherData(weather);
+        // Update recent searches
+        console.log(weather);
+
+      setRecentSearches(prev => {
+        const newSearches = [weather.location.name, ...prev.filter(s => s !== weather.location.name)].slice(0, 5);
+        return newSearches;
+      });
+      
+      const country = weatherData?.location?.country || "";
+
+      // Extract state and fetch soil data
+      if(!country || country != "India") return;
 
       const state = weather.location.region;
+      
+      
       const backendResponse = await fetch(
         `${FASTAPI_BASE_URL}/soil_analysis?state=${state}`
       );
@@ -44,7 +60,7 @@ const Tab = () => {
       }
 
       const soilDataResponse = await backendResponse.json();
-      setSoilData(soilDataResponse);
+      setSoilData(soilDataResponse);// Update soil data state
     } catch (error) {
       setError(error.message);
     } finally {
@@ -76,6 +92,25 @@ const Tab = () => {
             </button>
           </div>
         </form>
+        {recentSearches.length > 0 && (
+          <div className="mt-3 flex gap-2">
+            {recentSearches.map((search, index) => (
+              <button
+                key={index}
+                onClick={() => setSearchQuery(search)}
+                className="px-3 py-1.5 bg-gray-100 rounded-full hover:bg-gray-200 text-sm text-gray-600"
+              >
+                {search}
+              </button>
+            ))}
+          </div>
+        )}
+          {/* Error Alert
+          {error && (
+          <Alert variant="destructive" className="mt-4">
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )} */}
       </div>
       <Tabs defaultValue="weather" className="w-full max-w-6xl mx-auto">
         <TabsList className="bg-white/30 backdrop-blur-lg rounded-lg p-1 md:p-2 mb-6 w-full flex flex-col sm:flex-row space-y-2 sm:space-y-0">
