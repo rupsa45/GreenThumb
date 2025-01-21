@@ -93,9 +93,9 @@ const CropDetails = () => {
             </Card>
           </div>
 
-          {/* Right Section */}
+          {/* right Section */}
           <div>
-            {/* Climate Conditions Card */}
+            {/* climate Conditions Card */}
             <Card className="mb-8 border-yellow-200 shadow-lg">
               <CardHeader className="bg-yellow-100">
                 <CardTitle className="text-yellow-800">Climate Conditions</CardTitle>
@@ -118,7 +118,7 @@ const CropDetails = () => {
               </CardContent>
             </Card>
 
-            {/* Production Statistics Card */}
+            {/* production Statistics Card */}
             <Card className="border-yellow-200 shadow-lg">
               <CardHeader className="bg-yellow-100">
                 <CardTitle className="text-yellow-800">Production Statistics</CardTitle>

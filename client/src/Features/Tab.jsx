@@ -32,25 +32,22 @@ const Tab = () => {
       if (!response.ok) {
         throw new Error("Location not found. Please try again.");
       }
-      
+
       const weather = await response.json();
       setWeatherData(weather);
-        // Update recent searches
-        console.log(weather);
+      // Update recent searches
+      console.log(weather);
 
-      setRecentSearches(prev => {
-        const newSearches = [weather.location.name, ...prev.filter(s => s !== weather.location.name)].slice(0, 5);
+      setRecentSearches((prev) => {
+        const newSearches = [
+          weather.location.name,
+          ...prev.filter((s) => s !== weather.location.name),
+        ].slice(0, 5);
         return newSearches;
       });
-      
-      const country = weatherData?.location?.country || "";
-
-      // Extract state and fetch soil data
-      if(!country || country != "India") return;
 
       const state = weather.location.region;
-      
-      
+
       const backendResponse = await fetch(
         `${FASTAPI_BASE_URL}/soil_analysis?state=${state}`
       );
@@ -60,19 +57,19 @@ const Tab = () => {
       }
 
       const soilDataResponse = await backendResponse.json();
-      setSoilData(soilDataResponse);// Update soil data state
+      setSoilData(soilDataResponse); // Update soil data state
     } catch (error) {
       setError(error.message);
     } finally {
       setLoading(false);
     }
   };
-  
+
   const state = weatherData?.location?.region || "";
 
   return (
     <div className="space-y-8">
-      <div  className="max-w-2xl mx-auto px-4">
+      <div className="max-w-2xl mx-auto px-4">
         <form onSubmit={handleSearch}>
           <div className="relative shadow-sm">
             <input
@@ -105,7 +102,7 @@ const Tab = () => {
             ))}
           </div>
         )}
-          {/* Error Alert
+        {/* Error Alert
           {error && (
           <Alert variant="destructive" className="mt-4">
             <AlertDescription>{error}</AlertDescription>

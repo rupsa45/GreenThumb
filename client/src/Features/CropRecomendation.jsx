@@ -27,7 +27,7 @@ const CropRecommendation = ({ state }) => {
         const res = await fetchWeeklyAvg(state);
         setWeeklyAvgData(res);
 
-        // Predict crops based on fetched data
+        // Predict crops based on the state
         if (res) {
           const cropPrediction = await predictCrop(
             res.location,
