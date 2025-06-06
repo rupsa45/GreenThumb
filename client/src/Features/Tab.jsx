@@ -34,7 +34,7 @@ const Tab = () => {
       }
 
       const weather = await response.json();
-      setWeatherData(weather);
+      setWeatherData(weather);    
       // Update recent searches
       console.log(weather);
 
