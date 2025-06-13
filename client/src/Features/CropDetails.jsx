@@ -104,13 +104,13 @@ const CropDetails = () => {
                     </p>
                   </div>
                 </div>
-                <Separator className="my-4 bg-green-200" />
-                <div>
+                {/* <Separator className="my-4 bg-green-200" /> */}
+                {/* <div>
                   <p className="font-semibold text-green-700">Soil pH</p>
                   <p className="text-green-600">
                     {cropDetails.crop_details.pH_mean}
                   </p>
-                </div>
+                </div> */}
               </CardContent>
             </Card>
           </div>
@@ -208,7 +208,7 @@ const CropDetails = () => {
                         className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4 border rounded-lg bg-blue-50"
                       >
                         <div>
-                          <p className="font-semibold text-blue-700">Name</p>
+                          <p className="font-semibold text-blue-700">Fertilizer Name</p>
                           <p className="text-blue-600">
                             {item.fertilizer_name}
                           </p>
