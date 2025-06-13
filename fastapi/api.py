@@ -6,6 +6,17 @@ import joblib
 from ml_soilModel import get_soil_analysis
 from monthly_data import get_last_30_day_weather
 from fastapi.middleware.cors import CORSMiddleware
+import os
+from dotenv import load_dotenv
+import requests
+
+load_dotenv()
+
+#price prediction API configuration
+API_KEY = os.getenv("API_KEY")
+RESOURCE_ID = os.getenv("RESOURCE_ID")
+BASE_URL = f'https://api.data.gov.in/resource/{RESOURCE_ID}'
+
 
 app = FastAPI()
 # Add CORS Middleware
@@ -23,8 +34,14 @@ try:
     label_encoder = joblib.load("trained_models/label_encoder.pkl")
    
     df = pd.read_csv("Datasets/Crop_recommendation.csv").dropna()
+    fertilizer = pd.read_csv("Datasets/fertilizer_recommendation.csv").dropna()
+    fertilizer.columns = fertilizer.columns.str.strip()
+    fertilizer['Crop Type'] = fertilizer['Crop Type'].str.strip().str.lower()
+    fertilizer['Fertilizer Name'] = fertilizer['Fertilizer Name'].str.strip()
 except Exception as e:
     raise RuntimeError(f"Failed to load resources: {e}")
+
+
 
 # Define the request schema
 class CropRequest(BaseModel):
@@ -41,6 +58,11 @@ class CropDetailRequest(BaseModel):
 class CityRequest(BaseModel):
     city: str 
 
+
+class PriceRequest(BaseModel):
+    state: str
+    commodity: str
+    limit: int = 10  # limiting the number of results to 10 by default
 # Request schema end
 
 
@@ -136,3 +158,51 @@ def weather_summary(request: CityRequest):
         raise HTTPException(status_code=500, detail=str(ee))
     except Exception as e:
         raise HTTPException(status_code=500, detail="Internal server error")
+    
+
+# API for fertilizer recommendations based on crop type
+@app.post("/get-fertilizer")
+def get_fertilizer(data: CropDetailRequest):
+    crop = data.crop.strip().lower()
+    matched = fertilizer[fertilizer['Crop Type'] == crop]
+
+    if matched.empty:
+        raise HTTPException(status_code=404, detail=f"No fertilizer data found for crop '{data.crop}'")
+
+    results = []
+    for _, row in matched.iterrows():
+        fert_data = {
+            "fertilizer_name": row['Fertilizer Name'],
+            "nitrogen": row['Nitrogen'] if row['Nitrogen'] != 0 else None,
+            "phosphorus": row['Phosphorus'] if row['Phosphorus'] != 0 else None,
+            "potassium": row['Potassium'] if row['Potassium'] != 0 else None,
+            "soil_moisture": row['Soil Moisture']
+        }
+        results.append(fert_data)
+
+    return {"crop": data.crop.title(), "recommendations": results}
+
+# Api for price prediction
+@app.post("/get_price_data")
+def get_price_data(request: PriceRequest):
+    params = {
+        "api-key": API_KEY,
+        "format": "json",
+        "filters[state.keyword]": request.state,
+        "filters[commodity.keyword]": request.commodity,
+        "limit": request.limit
+    }
+    
+    response = requests.get(BASE_URL, params=params)
+    
+    if response.status_code != 200:
+        raise HTTPException(status_code=500, detail="Failed to fetch data from data.gov.in API")
+    
+    data = response.json()
+    
+    # Check if records exist
+    if "records" not in data or not data["records"]:
+        raise HTTPException(status_code=404, detail=f"No price data found for {request.commodity} in {request.state}")
+    
+    # Return the list of records directly
+    return {"price_data": data["records"]}

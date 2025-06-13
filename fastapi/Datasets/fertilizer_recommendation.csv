@@ -1,4 +1,4 @@
-Temparature,Humidity,Soil Moisture,Soil Type,Crop Type,Nitrogen,Potassium,Phosphorous,Fertilizer Name
+Temperature,Humidity,Soil Moisture,Soil Type,Crop Type,Nitrogen,Potassium,Phosphorus,Fertilizer Name
 26,52,38,Sandy,Maize,37,0,0,Urea
 29,52,45,Loamy,Sugarcane,12,0,36,DAP
 34,65,62,Black,Cotton,7,9,30,14-35-14
@@ -98,3 +98,69 @@ Temparature,Humidity,Soil Moisture,Soil Type,Crop Type,Nitrogen,Potassium,Phosph
 38,72,51,Loamy,Wheat,39,0,0,Urea
 36,60,43,Sandy,Millets,15,0,41,DAP
 29,58,57,Black,Sugarcane,12,0,10,20-20
+34,71,43,Black Soil,apple,56,0,60,Urea
+28,63,35,Sandy,apple,42,15,69,17-17-17
+30,64,39,Red,apple,25,0,33,DAP
+27,67,32,Clayey,banana,48,0,77,DAP
+30,69,38,Red,banana,65,0,62,Urea
+24,66,44,Alluvial,banana,50,16,0,14-35-14
+29,68,37,Sandy,banana,37,11,42,28-28
+33,61,41,Silty,blackgram,58,0,65,DAP
+29,70,36,Black Soil,blackgram,45,19,0,28-28
+27,60,39,Clayey,chickpea,53,0,71,Urea
+25,72,46,Laterite,chickpea,47,13,67,17-17-17
+30,63,33,Silty,chickpea,39,15,59,DAP
+33,66,44,Red,chickpea,60,0,0,Urea
+32,62,40,Loamy,coconut,49,20,0,DAP
+28,64,37,Sandy,coconut,46,0,66,Urea
+30,65,34,Alluvial,coconut,44,17,51,17-17-17
+26,60,38,Red,coconut,39,11,65,14-35-14
+31,66,40,Clayey,coconut,56,13,35,28-28
+30,65,34,Alluvial,coffee,61,18,72,28-28
+26,69,42,Red,coffee,55,0,64,DAP
+33,67,36,Sandy,coffee,38,16,40,Urea
+34,73,33,Loamy,grapes,59,12,75,17-17-17
+29,66,45,Peaty,grapes,52,0,61,Urea
+35,70,38,Red,grapes,64,0,34,28-28
+30,65,44,Alluvial,grapes,41,13,61,DAP
+31,60,31,Silty,jute,54,17,59,14-35-14
+27,68,48,Chalky,jute,44,0,58,DAP
+35,67,30,Black Soil,kidney beans,60,15,74,Urea
+32,62,40,Clayey,kidney beans,49,0,63,17-17-17
+30,61,39,Loamy,kidney beans,41,12,65,14-35-14
+28,64,37,Red,lentil,46,16,66,DAP
+30,65,34,Sandy,lentil,61,0,72,28-28
+27,66,32,Silty,lentil,55,17,42,Urea
+29,68,39,Black Soil,lentil,34,15,60,17-17-17
+26,69,42,Alluvial,mango,55,0,64,Urea
+34,73,33,Loamy,mango,59,12,75,14-35-14
+31,67,36,Clayey,mango,43,0,49,28-28
+29,66,45,Peaty,mothbeans,52,0,61,DAP
+31,60,31,Silty,mothbeans,54,17,59,28-28
+27,68,48,Chalky,mothbeans,44,0,58,Urea
+33,65,41,Black Soil,mothbeans,36,11,42,14-35-14
+35,67,30,Black Soil,mungbean,60,15,74,17-17-17
+32,62,40,Clayey,mungbean,49,0,63,DAP
+28,64,37,Red,orange,46,16,66,Urea
+30,65,34,Sandy,orange,61,0,72,14-35-14
+33,68,39,Loamy,orange,39,18,53,28-28
+26,69,42,Alluvial,muskmelon,55,0,64,DAP
+34,73,33,Loamy,muskmelon,59,12,75,28-28
+29,66,45,Peaty,papaya,52,0,61,Urea
+31,60,31,Silty,papaya,54,17,59,17-17-17
+27,68,48,Chalky,papaya,44,0,58,Urea
+35,67,30,Black Soil,papaya,60,15,74,14-35-14
+32,62,40,Clayey,pigeonpeas,49,0,63,DAP
+28,64,37,Red,pigeonpeas,46,16,66,Urea
+30,65,34,Sandy,pigeonpeas,61,0,72,14-35-14
+26,69,42,Alluvial,pigeonpeas,55,0,64,DAP
+34,73,33,Loamy,pomegranate,59,12,75,28-28
+29,66,45,Peaty,pomegranate,52,0,61,Urea
+31,60,31,Silty,pomegranate,54,17,59,17-17-17
+27,68,48,Chalky,pomegranate,44,0,58,Urea
+28,64,37,Red,watermelon,46,16,66,Urea
+30,65,34,Sandy,watermelon,61,0,72,28-28
+29,67,42,Clayey,rice,51,0,69,Urea
+33,72,45,Sandy,rice,40,18,47,28-28
+27,66,36,Red,rice,58,0,0,DAP
+30,65,38,Alluvial,rice,46,14,39,17-17-17

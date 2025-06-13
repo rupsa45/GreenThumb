@@ -1,4 +1,5 @@
 const FASTAPI_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
+const UNSPLASH_ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
 import axios from "axios";
 
 // Function to fetch weekly average data
@@ -66,3 +67,38 @@ export const getCropDetails = async (crop) => {
     );
   }
 };
+
+
+export const fetchCropImage = async (cropName) => {
+  const response = await axios.get(
+    `https://api.unsplash.com/search/photos`,
+    {
+      params: {
+        query: `${cropName}`,
+        per_page: 1,
+      },
+      headers: {
+        Authorization: `Client-ID ${UNSPLASH_ACCESS_KEY}`,
+      },
+    }
+  );
+  console.log(cropName);
+  
+
+  if (response.data.results.length > 0) {
+    return response.data.results[0].urls.regular;
+  } else {
+    return "/placeholder.svg"; // fallback
+  }
+};
+
+export const getFertilizer = async(crop)=>{
+  try {
+    const response = await axios.post(`${FASTAPI_URL}/get-fertilizer`, {
+      crop
+    });
+    return response.data;
+  } catch (error) {
+    console.log("Error while fetching fertilizer details",error); 
+  }
+}

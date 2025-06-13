@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Leaf, Droplets, Sprout } from "lucide-react";
+import { Leaf, Droplets, Sprout, TrendingUp } from "lucide-react";
 
 const SoilReportCard = ({ data }) => {
   if (!data) return null;
@@ -39,18 +39,18 @@ const SoilReportCard = ({ data }) => {
   return (
     <Card className="bg-gradient-to-br from-white to-green-50 border-none shadow-md">
       <CardContent className="p-6">
-        <div className="flex items-center gap-2 mb-6">
-          <Sprout className="w-6 h-6 text-green-600" />
-          <h2 className="text-2xl font-semibold text-green-800">
-            Soil Analysis Report
-          </h2>
-        </div>
+         <div className="flex items-center space-x-3 mb-6">
+              <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center">
+                <TrendingUp className="w-6 h-6 text-white" />
+              </div>
+              <h2 className="text-xl font-bold text-gray-800">Soil Analysis Report</h2>
+            </div>
 
         <div className="space-y-8">
           {/* Soil Types Section */}
           <div>
             <h3 className="text-lg font-medium text-green-800 mb-4 flex items-center gap-2">
-              <Leaf className="w-5 h-5 text-green-600" />
+              {/* <Leaf className="w-5 h-5 text-green-600" /> */}
               Soil Composition
             </h3>
             <div className="bg-white/50 rounded-xl p-4 space-y-3">
