@@ -29,7 +29,7 @@ const CropRecommendationLanding = () => {
               {/* <button className="bg-yellow-400 hover:bg-yellow-500 text-gray-800 px-4 py-2 rounded-md">
                 Book A Demo
               </button> */}
-              <Link to={"/register"}>
+              <Link to={"/weather"}>
                 <button className="border border-green-600 text-green-600 hover:bg-green-600 hover:text-white px-4 py-2 rounded-md">
                   Get Started
                 </button>

@@ -2,30 +2,34 @@ const FASTAPI_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
 import axios from "axios";
 
 // Function to fetch weekly average data
-export const fetchWeeklyAvg = async (location) => {
+export const fetchmonthylyAvg = async (city) => {
   try {
-    const response = await axios.post(`${FASTAPI_URL}/weekly-avg`, {
-      location,
+    const response = await axios.post(`${FASTAPI_URL}/monthly-avg`, {
+      city,
     });
     return response.data;
   } catch (error) {
-    console.error("Error fetching weekly average data:", error);
+    console.error("Error fetching monthly average data:", error);
   }
 };
 
-export const predictCrop = async (state,rainfall,temp) => {
-
+export const predictCrop = async (N, P, K, temperature, humidity, rainfall) => {
   try {
-    const response = await axios.post(`${FASTAPI_URL}/predict-crop`, {
-      State: state,
-      Rainfall:rainfall,
-      Temperature:temp,
+    const response = await axios.post(`${FASTAPI_URL}/predict_crop`, {
+      N,
+      P,
+      K,
+      temperature,
+      humidity,
+      rainfall,
     });
     return response.data;
   } catch (error) {
     console.error("Error predicting crop:", error);
+    return []; // avoid breaking UI
   }
 };
+
 
 export const fetchCrops = async (state) => {
   try {
@@ -50,10 +54,9 @@ export const fetchCrops = async (state) => {
 
 
 
-export const getCropDetails = async (state, crop) => {
+export const getCropDetails = async (crop) => {
   try {
     const response = await axios.post(`${FASTAPI_URL}/crop_details`, {
-      state,
       crop,
     });
     return response.data;

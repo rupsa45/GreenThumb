@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { getCropDetails } from "../apis/crop.api";
 const CropDetails = () => {
-  const { state, crop } = useParams();
+  const { crop } = useParams();
   const [cropDetails, setCropDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,7 +16,7 @@ const CropDetails = () => {
       setLoading(true);
       setError(null);
       try {
-        const res= await getCropDetails(state, crop);
+        const res= await getCropDetails(crop);
       
         setCropDetails(res);
         console.log("Crop Details:", res);
@@ -30,7 +30,7 @@ const CropDetails = () => {
     };
 
     fetchCropDetails();
-  }, [state, crop]);
+  }, [ crop]);
 
  
   if (loading) return <p>Loading...</p>;
@@ -44,7 +44,11 @@ const CropDetails = () => {
           {/* Left Section */}
           <div>
             <h1 className="text-3xl font-bold mb-4 text-green-800">
-              {capitalizeFirstLetter(cropDetails.crop_details.crop)} in {capitalizeFirstLetter(cropDetails.crop_details.state)}
+              {
+                capitalizeFirstLetter(cropDetails.crop_details.crop)
+              } 
+              {/* //in {capitalizeFirstLetter(cropDetails.crop_details.state) */}
+              
             </h1>
 
             {/* Crop Image Card */}
@@ -105,13 +109,19 @@ const CropDetails = () => {
                   <div>
                     <p className="font-semibold text-yellow-700">Average Rainfall</p>
                     <p className="text-yellow-600">
-                      {cropDetails.crop_details.Rainfall_mean} mm
+                      {cropDetails.crop_details.rainfall_mean} mm
                     </p>
                   </div>
                   <div>
                     <p className="font-semibold text-yellow-700">Average Temperature</p>
                     <p className="text-yellow-600">
-                      {cropDetails.crop_details.Temperature_mean}°C
+                      {cropDetails.crop_details.temperature_mean}°C
+                    </p>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-yellow-700">Average Temperature</p>
+                    <p className="text-yellow-600">
+                      {cropDetails.crop_details.humidity_mean}g/m³
                     </p>
                   </div>
                 </div>

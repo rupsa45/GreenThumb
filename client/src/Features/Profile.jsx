@@ -2,7 +2,7 @@
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { MapPin, Mail, User } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { getUserData } from '../apis/user.api';
+// import { getUserData } from '../apis/user.api';
 
 const Profile = () => {
   const [formData, setFormData] = useState({
