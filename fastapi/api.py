@@ -32,6 +32,9 @@ app.add_middleware(
 try:
     trained_crop_model = joblib.load("trained_models/crop_recommendation_model.pkl")
     label_encoder = joblib.load("trained_models/label_encoder.pkl")
+    area_model = joblib.load("trained_models/area_model.pkl")
+    prod_model = joblib.load("trained_models/production_model.pkl")
+    encoder = joblib.load("trained_models/encoder.pkl")
    
     df = pd.read_csv("Datasets/Crop_recommendation.csv").dropna()
     fertilizer = pd.read_csv("Datasets/fertilizer_recommendation.csv").dropna()
@@ -68,8 +71,13 @@ class PriceRequest(BaseModel):
     @classmethod
     def capitalize_commodity(cls, v):
         return v.capitalize()
+    
+class Prod_Input(BaseModel):
+    state_name: str
+    district_name: str
+    crop: str
+    season: str
 # Request schema end
-
 
 
 # Setting up the home API
@@ -212,3 +220,32 @@ def get_price_data(request: PriceRequest):
     
     # Return the list of records directly
     return {"price_data": data["records"]}
+
+@app.post("/prod_prediction")
+async def predict_crop_output(input_data: Prod_Input):
+    try:
+        
+        input_dict = {
+            'State_Name': input_data.state_name.strip().lower(),
+            'District_Name': input_data.district_name.strip().lower(),
+            'Crop': input_data.crop.strip().lower(),
+            'Season': input_data.season.strip().lower()
+        }
+
+        # Prepare input DataFrame
+        input_df = pd.DataFrame([input_dict])
+
+        # One-hot encode
+        encoded_input = encoder.transform(input_df)
+
+        # Predict
+        pred_area = area_model.predict(encoded_input)[0]
+        pred_prod = prod_model.predict(encoded_input)[0]
+
+        return {
+            "estimated_area": round(float(pred_area), 2),
+            "estimated_production": round(float(pred_prod), 2),
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Prediction failed: {str(e)}")

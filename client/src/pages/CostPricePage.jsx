@@ -1,4 +1,5 @@
 import CostPrediction from '../Features/CostPrediction'
+import DashboardNav from '../Layout/DashboardNav'
 
 // const sampleCostData = {
 //     district: "Murshidabad",
@@ -12,6 +13,7 @@ import CostPrediction from '../Features/CostPrediction'
 const CostPricePage = () => {
   return (
     <div >
+      <DashboardNav/>
       <CostPrediction />
     </div>
   )

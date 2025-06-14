@@ -1,7 +1,7 @@
 import { Search } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "../components/ui/tabs";
 import CropRecomendation from "./CropRecomendation";
-import Guides from "./Guides";
+//import Guides from "./Guides";
 import WeatherTab from "./WeatherTab";
 import { useEffect, useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -138,12 +138,12 @@ const Tab = () => {
           >
             Crop Recommendations
           </TabsTrigger>
-          <TabsTrigger
+          {/* <TabsTrigger
             value="guides"
             className="text-sm md:text-base text-green-800 flex-1"
           >
             Farming Guides
-          </TabsTrigger>
+          </TabsTrigger> */}
         </TabsList>
         <WeatherTab
           searchQuery={searchQuery}
@@ -155,7 +155,7 @@ const Tab = () => {
           error={error}
         />
         <CropRecomendation state={state} />
-        <Guides />
+        {/* <Guides /> */}
       </Tabs>
     </div>
   );

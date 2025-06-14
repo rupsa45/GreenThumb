@@ -48,7 +48,7 @@ const CropDetails = () => {
   if (!cropDetails) return <p>No details available.</p>;
 
   return (
-    <div className="mt-8">
+    <div >
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Left Section */}
