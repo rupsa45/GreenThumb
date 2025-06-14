@@ -3,11 +3,13 @@ import { Tabs, TabsList, TabsTrigger } from "../components/ui/tabs";
 import CropRecomendation from "./CropRecomendation";
 import Guides from "./Guides";
 import WeatherTab from "./WeatherTab";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useLocation } from "../Context/LocationProvider";
 
 const FASTAPI_BASE_URL = import.meta.env.VITE_FASTAPI_BASE_URL;
 const WEATHER_API_KEY = import.meta.env.VITE_WEATHERAPI_KEY;
+
 
 const Tab = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -16,6 +18,9 @@ const Tab = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [recentSearches, setRecentSearches] = useState([]);
+  const { setState, state } = useLocation();
+
+
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -23,6 +28,9 @@ const Tab = () => {
 
     setLoading(true);
     setError(null);
+    if (weatherData?.location?.region) {
+    setState(weatherData.location.region);
+  }
 
     try {
       const response = await fetch(
@@ -65,8 +73,15 @@ const Tab = () => {
     }
   };
 
-  const state = weatherData?.location?.region || "";
+  useEffect(() => {
+  if (weatherData?.location?.region) {
+    setState(weatherData.location.region);
+  }
+}, [weatherData]);
 
+
+  //const state = weatherData?.location?.region || "";
+  // setState(weatherData?.location.region);
   return (
     <div className="space-y-8">
       <div className="max-w-2xl mx-auto px-4">

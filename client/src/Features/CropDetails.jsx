@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+// import { Separator } from "@/components/ui/separator";
+import { Link } from "react-router-dom";
 import {
   fetchCropImage,
+  fetchCropPrices,
   getCropDetails,
   getFertilizer,
 } from "../apis/crop.api";
@@ -80,7 +82,7 @@ const CropDetails = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="mt-5 grid grid-cols-3 gap-4">
                   <div>
                     <p className="font-semibold text-green-700">Nitrogen (N)</p>
                     <p className="text-green-600">
@@ -113,19 +115,42 @@ const CropDetails = () => {
                 </div> */}
               </CardContent>
             </Card>
+            <div className="bg-green-50 border border-green-300 mt-8 shadow-lg p-5 rounded-lg text-center">
+              <h1 className="text-green-800 font-bold text-center text-xl">
+                Curious about Market Prices?
+              </h1>
+              <p className="text-center font-serif mt-4">
+                Wondering how much your crop might sell for in different markets
+                across your state?
+                <span className="font-medium"> Click below</span> to explore
+                market-wise price predictions and plan your selling strategy
+                better.
+              </p>
+
+              <p className="text-sm text-red-600 mt-4 italic">
+                Note: Market data may not be available at all times as it gets
+                updated periodically by official sources.
+              </p>
+
+              <Link to={`/cost-prediction/${crop}`}>
+                <button className="bg-gradient-to-r from-green-600 to-emerald-700 rounded-full font-semibold p-3 mt-5 hover:from-emerald-700 hover:to-green-600 shadow transition duration-300">
+                  Check Crop Prices →
+                </button>
+              </Link>
+            </div>
           </div>
 
           {/* right Section */}
           <div>
             {/* climate Conditions Card */}
-            <Card className="mb-8 border-yellow-200 shadow-lg">
+            <Card className=" mb-8 border-yellow-200 shadow-lg">
               <CardHeader className="bg-yellow-100">
                 <CardTitle className="text-yellow-800">
                   Climate Conditions
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                <div className="space-y-4 mt-5">
                   <div>
                     <p className="font-semibold text-yellow-700">
                       Average Rainfall
@@ -144,7 +169,7 @@ const CropDetails = () => {
                   </div>
                   <div>
                     <p className="font-semibold text-yellow-700">
-                      Average Temperature
+                      Average Humidity
                     </p>
                     <p className="text-yellow-600">
                       {cropDetails.crop_details.humidity_mean}g/m³
@@ -208,7 +233,9 @@ const CropDetails = () => {
                         className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4 border rounded-lg bg-blue-50"
                       >
                         <div>
-                          <p className="font-semibold text-blue-700">Fertilizer Name</p>
+                          <p className="font-semibold text-blue-700">
+                            Fertilizer Name
+                          </p>
                           <p className="text-blue-600">
                             {item.fertilizer_name}
                           </p>

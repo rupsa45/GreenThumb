@@ -7,12 +7,14 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Thermometer, CloudRain, Droplets } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useLocation } from "../Context/LocationProvider";
 
-const CropRecommendation = ({ state }) => {
+const CropRecommendation = ({state}) => {
   const [topCrops, setTopCrops] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [submitted, setSubmitted] = useState(false);
+  const { setCrop } = useLocation();
 
   const [formData, setFormData] = useState({
     nitrogen: "",
@@ -35,25 +37,28 @@ const CropRecommendation = ({ state }) => {
     String(val).charAt(0).toUpperCase() + String(val).slice(1);
 
   useEffect(() => {
-    if (!state) return;
+  if (!state) return;
+  console.log("Received state:", state);
 
-    const fetchEnvironmentalData = async () => {
-      try {
-        const res = await fetchmonthylyAvg(state);
-        setFormData((prev) => ({
-          ...prev,
-          temperature: res.average_temperature_c,
-          humidity: res.average_humidity_percent,
-          rainfall: res.total_rainfall_mm,
-        }));
-      } catch (err) {
-        console.error("Error fetching environmental data:", err);
-        setError("Could not load environmental data.");
-      }
-    };
+  const fetchEnvironmentalData = async () => {
+    try {
+      const res = await fetchmonthylyAvg(state);
+      console.log("Environmental data:", res);
+      setFormData((prev) => ({
+        ...prev,
+        temperature: res.average_temperature_c,
+        humidity: res.average_humidity_percent,
+        rainfall: res.total_rainfall_mm,
+      }));
+    } catch (err) {
+      console.error("Error fetching environmental data:", err);
+      setError("Could not load environmental data.");
+    }
+  };
 
-    fetchEnvironmentalData();
-  }, [state]);
+  fetchEnvironmentalData();
+}, [state]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -91,12 +96,18 @@ const CropRecommendation = ({ state }) => {
 
       setTopCrops(filteredCrops);
       setSubmitted(true);
+
+      // 🟢 Set crop name globally
+      if (filteredCrops.length > 0) {
+        setCrop(filteredCrops[0].crop);
+      }
       if (cropPrediction) {
-        setFormData({
+        setFormData((prev) => ({
+          ...prev,
           nitrogen: "",
           phosphorus: "",
           potassium: "",
-        });
+        }));
       }
     } catch (err) {
       console.error("Prediction failed:", err);
@@ -203,18 +214,19 @@ const CropRecommendation = ({ state }) => {
                 Top 5 Recommended Crops for {state}
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-                {topCrops.map(({ crop, probability }, index) => (
+                {topCrops.map(({ crop }, index) => (
                   <div
                     key={index}
                     className="bg-white/50 p-4 rounded-lg shadow text-center"
                   >
-                    <Link to={`/crop-detail/${crop}`} target="blank">
+                    {/* //target="blank" */}
+                    <Link to={`/crop-detail/${crop}`}>
                       <div className="text-green-700 font-semibold">
                         {capitalizeFirstLetter(crop)}
                       </div>
-                      <div className="text-sm">
+                      {/* <div className="text-sm">
                         Suitability: {(probability * 100).toFixed(1)}%
-                      </div>
+                      </div> */}
                     </Link>
                   </div>
                 ))}

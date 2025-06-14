@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 import numpy as np
 import pandas as pd
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 import joblib
 from ml_soilModel import get_soil_analysis
 from monthly_data import get_last_30_day_weather
@@ -62,8 +62,14 @@ class CityRequest(BaseModel):
 class PriceRequest(BaseModel):
     state: str
     commodity: str
-    limit: int = 10  # limiting the number of results to 10 by default
+    limit: int = 10
+
+    @field_validator("commodity", mode="before")
+    @classmethod
+    def capitalize_commodity(cls, v):
+        return v.capitalize()
 # Request schema end
+
 
 
 # Setting up the home API

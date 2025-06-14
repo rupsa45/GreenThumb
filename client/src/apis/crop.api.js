@@ -82,7 +82,7 @@ export const fetchCropImage = async (cropName) => {
       },
     }
   );
-  console.log(cropName);
+  //console.log(cropName);
   
 
   if (response.data.results.length > 0) {
@@ -102,3 +102,18 @@ export const getFertilizer = async(crop)=>{
     console.log("Error while fetching fertilizer details",error); 
   }
 }
+
+
+export const fetchCropPrices = async (state, crop) => {
+  try {
+    const response = await axios.post(`${FASTAPI_URL}/get_price_data`, {
+      state,
+      commodity: crop, // ✅ correct key name for backend
+    });
+
+    return response.data; // ✅ returns parsed data
+  } catch (error) {
+    console.error("Error while fetching crop price", error);
+    throw error;
+  }
+};
