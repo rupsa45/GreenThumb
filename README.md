@@ -47,7 +47,7 @@ GreenThumb's Crop Yield Estimation feature helps farmers and agricultural analys
 
 | Weather Dashboard | Crop Recommendation | Price Prediction |
 |-------------------|---------------------|------------------|
-| ![Weather](https://github.com/user-attachments/assets/782e055b-1924-44da-bb49-7a2f5995b716) | ![Recommendation](https://github.com/user-attachments/assets/cce0b622-bdd2-400f-a11b-f7991dd795a6) | ![Price Prediction](https://github.com/user-attachments/assets/6afa2481-6824-49fe-930e-d0e480840099) |
+| ![Weather](https://github.com/user-attachments/assets/782e055b-1924-44da-bb49-7a2f5995b716) | ![Recommendation](https://github.com/user-attachments/assets/6afa2481-6824-49fe-930e-d0e480840099) | ![Price Prediction](https://github.com/user-attachments/assets/cce0b622-bdd2-400f-a11b-f7991dd795a6) |
 | ![Chart View](https://github.com/user-attachments/assets/056e8156-8d42-40f2-996c-30957812ed3f) | ![Final Result](https://github.com/user-attachments/assets/d8b55dfe-1f25-480f-be64-211a0ebddece) | |
 
 ---
