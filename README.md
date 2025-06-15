@@ -52,4 +52,3 @@ GreenThumb's Crop Yield Estimation feature helps farmers and agricultural analys
 ![Screenshot 2025-06-15 232338](https://github.com/user-attachments/assets/cce0b622-bdd2-400f-a11b-f7991dd795a6)
 ![Screenshot 2025-06-15 232136](https://github.com/user-attachments/assets/782e055b-1924-44da-bb49-7a2f5995b716)
 
-    }
