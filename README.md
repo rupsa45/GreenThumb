@@ -52,15 +52,8 @@ GreenThumb's Crop Yield Estimation feature helps farmers and agricultural analys
 
 ---
 
-## 📈 Future Scope
 
-- District-wise filters for crop prices
-- Add export to PDF / Excel for farmer reports
-- Use animated charts for better UX (Recharts / Victory)
 
----
-
-## 👩‍💻 Developer
 
 Made with 💚  
 [GitHub]([https://github.com/yourusername](https://github.com/rupsa45)) | [LinkedIn]([https://linkedin.com/in/yourname](https://www.linkedin.com/in/rupsa-das-96b26b231/))
